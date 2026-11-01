@@ -416,7 +416,9 @@
               "lines": [
                 "# Avaliação da Alfabetização — Real vs Meta\n",
                 "\n",
-                "Taxa de alfabetização dos alunos avaliados (2º e 3º anos do ensino fundamental) comparada às metas por Brasil, UF e município."
+                "Taxa de alfabetização dos alunos avaliados (2º e 3º anos do ensino fundamental) comparada às metas por Brasil, UF e município.\n",
+                "\n",
+                "**Leitura das metas:** todos os cálculos (Real vs Meta, rankings e `atingimento_meta`) usam exclusivamente a **trajetória pactuada 2024–2030** da fonte; a **universalização até 2030** é um **cenário aspiracional** e não entra em nenhum cálculo."
               ]
             }
           },

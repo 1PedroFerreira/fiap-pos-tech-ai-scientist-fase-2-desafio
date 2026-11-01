@@ -88,3 +88,22 @@ O dashboard **“Avaliação da Alfabetização — Real vs Meta”** compara Re
 Filtros: Ano, Região e UF (globais); Município, Rede, Série e Situação do Aluno (por página).
 
 > **Nota técnica:** os datasets do dashboard estão embutidos no próprio arquivo `.lvdash.json` como *local metric views* (medidas e dimensões declaradas sobre as tabelas Gold, incluindo medidas ponderadas como `SUM(x * qtd_alunos) / SUM(qtd_alunos)`), sem consultas SQL externas. Ao importar o dashboard, as tabelas Gold precisam existir no workspace de destino.
+
+## FinOps e otimização de custos
+
+Práticas de eficiência de custo aplicadas e recomendadas neste projeto:
+
+**Já aplicadas**
+
+* **Computação serverless** — o pipeline (Lakeflow Spark Declarative Pipelines) roda em compute serverless, cobrando por DBU efetivamente consumida, sem custo de cluster ocioso;
+* **Materialização dos datasets do dashboard** — as 4 *local metric views* (`alunos`, `alfabetizacao_brasil`, `alfabetizacao_uf`, `alfabetizacao_municipio`) estão com *materialize-on-publish* habilitado: os dados são pré-computados quando o dashboard é publicado, acelerando filtros e widgets e reduzindo tempo de execução no warehouse SQL a cada visualização. Requisitos: publicação com credenciais incorporadas (*run as owner*) e pelo menos um agendamento de atualização ativo — hoje **não há nenhum agendamento**; criar um (ex.: diário) na UI de agendamentos para que a materialização seja atualizada;
+* **Deduplicação com watermark** (`silver_alunos`) — a janela de watermark de 30 dias limita o estado mantido pelo streaming, reduzindo memória e compute nos updates;
+* **Streaming incremental (Auto Loader)** — apenas os arquivos novos do volume são processados a cada update, sem reingestão completa;
+* **Consultas agregadas** — os widgets leem as tabelas Gold já agregadas por ano (Brasil/UF/município); apenas a tabela "Detalhes por Aluno" consulta registros individuais.
+
+**Recomendações**
+
+* **Auto-stop do warehouse SQL** — manter auto-stop curto (5–10 min) e tamanho inicial pequeno, escalando apenas se a latência do dashboard exigir;
+* **Pipeline disparado em vez de contínuo** — para dados com tolerância a latência de horas, agendar updates do pipeline (ex.: 1×/dia) em vez de processamento contínuo: o compute só existe durante o update;
+* **Atribuição de custos por tags** — aplicar tags de custo (ex.: `projeto:avaliacao_alfabetizacao`) a warehouses e pipelines e monitorar o consumo em `system.billing.usage`;
+* **Retenção de arquivos brutos** — revisar o ciclo de vida dos CSVs no volume (`batch/` e `streaming/`); após validação, arquivos históricos podem ser arquivados ou removidos para reduzir armazenamento.
