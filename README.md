@@ -4,6 +4,17 @@
 
 Pipeline de dados medalhão (**batch + streaming**) construído no Databricks com **dados simulados** inspirados na **Avaliação da Alfabetização do INEP** (dataset disponível via Base dos Dados). O objetivo é comparar a taxa **real** de alfabetização dos alunos avaliados (2º e 3º anos do ensino fundamental) com as **metas** definidas em três níveis: **Brasil**, **UF** e **Município**.
 
+## Leitura das metas (duas leituras)
+
+O Compromisso Nacional tem como aspiração a **universalização da alfabetização até 2030**. As tabelas oficiais publicadas na Base dos Dados, entretanto, trazem uma **trajetória pactuada e mensurável**, com valores anuais de 2024 a 2030 — para a rede pública, a coluna `meta_alfabetizacao_2030` traz o valor **80**.
+
+Neste projeto:
+
+* **Cálculos de distância até a meta** (widgets Real vs Meta, rankings de municípios e a coluna `atingimento_meta` da camada Gold) usam **exclusivamente a trajetória pactuada da fonte** — as metas anuais por Brasil, UF e município;
+* A leitura de **universalização até 2030** é um **cenário aspiracional** e **não entra em nenhum cálculo**; se algum dia for exibida em alguma visão, será identificada como "cenário aspiracional".
+
+As duas leituras são legítimas, mas significam coisas diferentes — e não são misturadas em pontos diferentes do projeto.
+
 ## Entidades (6)
 
 | Entidade | Conteúdo | Volume |

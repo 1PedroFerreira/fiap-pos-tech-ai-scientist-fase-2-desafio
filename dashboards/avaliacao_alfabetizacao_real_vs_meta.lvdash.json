@@ -415,7 +415,8 @@
             "multilineTextboxSpec": {
               "lines": [
                 "# Avaliação da Alfabetização — Real vs Meta\n",
-                "Taxa de alfabetização dos alunos avaliados (2º e 3º anos do ensino fundamental) comparada às metas por Brasil, UF e município. Fonte: pipeline medalhão com dados simulados inspirados na Avaliação da Alfabetização do INEP (Base dos Dados)."
+                "\n",
+                "Taxa de alfabetização dos alunos avaliados (2º e 3º anos do ensino fundamental) comparada às metas por Brasil, UF e município."
               ]
             }
           },
