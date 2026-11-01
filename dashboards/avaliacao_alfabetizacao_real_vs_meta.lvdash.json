@@ -1,0 +1,1575 @@
+{
+  "datasets": [
+    {
+      "name": "alunos",
+      "displayName": "Alfabetização — Alunos",
+      "config": {
+        "source": "workspace.default.gold_alunos",
+        "measures": [
+          {
+            "name": "qtd_alunos",
+            "expr": "COUNT(1)"
+          },
+          {
+            "name": "taxa_alfabetizacao",
+            "expr": "AVG(CASE WHEN alfabetizado THEN 1.0 ELSE 0.0 END)",
+            "format": {
+              "type": "percentage",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 1.0
+              }
+            }
+          },
+          {
+            "name": "escolas_avaliadas",
+            "expr": "COUNT(DISTINCT id_escola)"
+          },
+          {
+            "name": "municipios_avaliados",
+            "expr": "COUNT(DISTINCT id_municipio)"
+          },
+          {
+            "name": "media_leitura",
+            "expr": "AVG(proficiencia_leitura)",
+            "format": {
+              "type": "number",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 1.0
+              }
+            }
+          },
+          {
+            "name": "media_escrita",
+            "expr": "AVG(proficiencia_escrita)",
+            "format": {
+              "type": "number",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 1.0
+              }
+            }
+          },
+          {
+            "name": "media_matematica",
+            "expr": "AVG(proficiencia_matematica)",
+            "format": {
+              "type": "number",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 1.0
+              }
+            }
+          }
+        ],
+        "version": "1.1",
+        "comment": "Avaliações por aluno com nome de município e UF (dados simulados INEP)",
+        "dimensions": [
+          {
+            "name": "ano",
+            "expr": "ano"
+          },
+          {
+            "name": "id_aluno",
+            "expr": "id_aluno"
+          },
+          {
+            "name": "id_escola",
+            "expr": "id_escola"
+          },
+          {
+            "name": "id_municipio",
+            "expr": "id_municipio"
+          },
+          {
+            "name": "nome_municipio",
+            "expr": "nome_municipio"
+          },
+          {
+            "name": "sigla_uf",
+            "expr": "sigla_uf"
+          },
+          {
+            "name": "nome_uf",
+            "expr": "nome_uf"
+          },
+          {
+            "name": "regiao",
+            "expr": "regiao"
+          },
+          {
+            "name": "rede",
+            "expr": "rede"
+          },
+          {
+            "name": "serie",
+            "expr": "serie"
+          },
+          {
+            "name": "idade",
+            "expr": "idade"
+          },
+          {
+            "name": "nivel_escrita",
+            "expr": "nivel_escrita"
+          },
+          {
+            "name": "alfabetizado",
+            "expr": "alfabetizado"
+          },
+          {
+            "name": "situacao_aluno",
+            "expr": "CASE WHEN alfabetizado THEN 'Alfabetizado' ELSE 'Não alfabetizado' END"
+          },
+          {
+            "name": "data_avaliacao",
+            "expr": "data_avaliacao"
+          },
+          {
+            "name": "proficiencia_leitura",
+            "expr": "proficiencia_leitura"
+          },
+          {
+            "name": "proficiencia_escrita",
+            "expr": "proficiencia_escrita"
+          },
+          {
+            "name": "proficiencia_matematica",
+            "expr": "proficiencia_matematica"
+          }
+        ]
+      }
+    },
+    {
+      "name": "alfabetizacao_brasil",
+      "displayName": "Alfabetização — Brasil",
+      "config": {
+        "source": "workspace.default.gold_alfabetizacao_brasil",
+        "measures": [
+          {
+            "name": "qtd_alunos",
+            "expr": "SUM(qtd_alunos)"
+          },
+          {
+            "name": "pct_alfabetizados",
+            "expr": "AVG(pct_alfabetizados)",
+            "format": {
+              "type": "percentage",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 1.0
+              }
+            }
+          },
+          {
+            "name": "meta_pct",
+            "expr": "AVG(meta_pct)",
+            "format": {
+              "type": "percentage",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 1.0
+              }
+            }
+          },
+          {
+            "name": "atingimento_meta",
+            "expr": "AVG(atingimento_meta)",
+            "format": {
+              "type": "percentage",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 1.0
+              }
+            }
+          }
+        ],
+        "version": "1.1",
+        "comment": "Taxa de alfabetização real por ano comparada à meta nacional (dados simulados INEP)",
+        "dimensions": [
+          {
+            "name": "ano",
+            "expr": "ano"
+          }
+        ]
+      }
+    },
+    {
+      "name": "alfabetizacao_municipio",
+      "displayName": "Alfabetização — Município",
+      "config": {
+        "source": "workspace.default.gold_alfabetizacao_municipio",
+        "measures": [
+          {
+            "name": "qtd_alunos",
+            "expr": "SUM(qtd_alunos)"
+          },
+          {
+            "name": "pct_alfabetizados",
+            "expr": "AVG(pct_alfabetizados)",
+            "format": {
+              "type": "percentage",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 1.0
+              }
+            }
+          },
+          {
+            "name": "meta_pct",
+            "expr": "AVG(meta_pct)",
+            "format": {
+              "type": "percentage",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 1.0
+              }
+            }
+          },
+          {
+            "name": "atingimento_meta",
+            "expr": "AVG(atingimento_meta)",
+            "format": {
+              "type": "percentage",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 1.0
+              }
+            }
+          },
+          {
+            "name": "atingimento_ponderado",
+            "expr": "SUM(atingimento_meta * qtd_alunos) / SUM(qtd_alunos)",
+            "format": {
+              "type": "percentage",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 1.0
+              }
+            }
+          }
+        ],
+        "version": "1.1",
+        "comment": "Taxa de alfabetização real por município e ano comparada à meta municipal (dados simulados INEP)",
+        "dimensions": [
+          {
+            "name": "ano",
+            "expr": "ano"
+          },
+          {
+            "name": "id_municipio",
+            "expr": "id_municipio"
+          },
+          {
+            "name": "nome_municipio",
+            "expr": "nome_municipio"
+          },
+          {
+            "name": "sigla_uf",
+            "expr": "sigla_uf"
+          },
+          {
+            "name": "nome_uf",
+            "expr": "nome_uf"
+          },
+          {
+            "name": "regiao",
+            "expr": "regiao"
+          },
+          {
+            "name": "municipio_uf",
+            "expr": "concat(nome_municipio, ' (', sigla_uf, ')')"
+          },
+          {
+            "name": "meta_atingida",
+            "expr": "meta_atingida"
+          },
+          {
+            "name": "situacao_meta",
+            "expr": "CASE WHEN meta_atingida THEN 'Meta atingida' ELSE 'Abaixo da meta' END"
+          }
+        ]
+      }
+    },
+    {
+      "name": "alfabetizacao_uf",
+      "displayName": "Alfabetização — UF",
+      "config": {
+        "source": "workspace.default.gold_alfabetizacao_uf",
+        "measures": [
+          {
+            "name": "qtd_alunos",
+            "expr": "SUM(qtd_alunos)"
+          },
+          {
+            "name": "qtd_avaliacoes",
+            "expr": "COUNT(1)"
+          },
+          {
+            "name": "pct_alfabetizados",
+            "expr": "AVG(pct_alfabetizados)",
+            "format": {
+              "type": "percentage",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 1.0
+              }
+            }
+          },
+          {
+            "name": "meta_pct",
+            "expr": "AVG(meta_pct)",
+            "format": {
+              "type": "percentage",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 1.0
+              }
+            }
+          },
+          {
+            "name": "pct_alfabetizados_ponderado",
+            "expr": "SUM(pct_alfabetizados * qtd_alunos) / SUM(qtd_alunos)",
+            "format": {
+              "type": "percentage",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 1.0
+              }
+            }
+          },
+          {
+            "name": "meta_pct_ponderado",
+            "expr": "SUM(meta_pct * qtd_alunos) / SUM(qtd_alunos)",
+            "format": {
+              "type": "percentage",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 1.0
+              }
+            }
+          },
+          {
+            "name": "atingimento_meta",
+            "expr": "AVG(atingimento_meta)",
+            "format": {
+              "type": "percentage",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 1.0
+              }
+            }
+          },
+          {
+            "name": "atingimento_ponderado",
+            "expr": "SUM(atingimento_meta * qtd_alunos) / SUM(qtd_alunos)",
+            "format": {
+              "type": "percentage",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 1.0
+              }
+            }
+          }
+        ],
+        "version": "1.1",
+        "comment": "Taxa de alfabetização real por UF e ano comparada à meta estadual (dados simulados INEP)",
+        "dimensions": [
+          {
+            "name": "ano",
+            "expr": "ano"
+          },
+          {
+            "name": "sigla_uf",
+            "expr": "sigla_uf"
+          },
+          {
+            "name": "nome_uf",
+            "expr": "nome_uf"
+          },
+          {
+            "name": "regiao",
+            "expr": "regiao"
+          },
+          {
+            "name": "meta_atingida",
+            "expr": "meta_atingida"
+          },
+          {
+            "name": "situacao_meta",
+            "expr": "CASE WHEN meta_atingida THEN 'Meta atingida' ELSE 'Abaixo da meta' END"
+          }
+        ]
+      }
+    }
+  ],
+  "pages": [
+    {
+      "name": "11d09738",
+      "displayName": "Page 1",
+      "layout": [
+        {
+          "widget": {
+            "name": "header",
+            "multilineTextboxSpec": {
+              "lines": [
+                "# Avaliação da Alfabetização — Real vs Meta\n",
+                "Taxa de alfabetização dos alunos avaliados (2º e 3º anos do ensino fundamental) comparada às metas por Brasil, UF e município. Fonte: pipeline medalhão com dados simulados inspirados na Avaliação da Alfabetização do INEP (Base dos Dados)."
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "filtro_municipio",
+            "queries": [
+              {
+                "name": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d584645115f5b332ef8b9d94ce69_nome_municipio",
+                "query": {
+                  "datasetName": "alunos",
+                  "fields": [
+                    {
+                      "name": "nome_municipio",
+                      "expression": "`nome_municipio`"
+                    },
+                    {
+                      "name": "nome_municipio_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Município"
+              },
+              "widgetType": "filter-multi-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "nome_municipio",
+                    "queryName": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d584645115f5b332ef8b9d94ce69_nome_municipio"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "filtro_rede",
+            "queries": [
+              {
+                "name": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d584645115f5b332ef8b9d94ce69_rede",
+                "query": {
+                  "datasetName": "alunos",
+                  "fields": [
+                    {
+                      "name": "rede",
+                      "expression": "`rede`"
+                    },
+                    {
+                      "name": "rede_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Rede"
+              },
+              "widgetType": "filter-multi-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "rede",
+                    "queryName": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d584645115f5b332ef8b9d94ce69_rede"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 2,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "filtro_serie",
+            "queries": [
+              {
+                "name": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d584645115f5b332ef8b9d94ce69_serie",
+                "query": {
+                  "datasetName": "alunos",
+                  "fields": [
+                    {
+                      "name": "serie",
+                      "expression": "`serie`"
+                    },
+                    {
+                      "name": "serie_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Série"
+              },
+              "widgetType": "filter-multi-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "serie",
+                    "queryName": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d584645115f5b332ef8b9d94ce69_serie"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 2,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "filtro_situacao",
+            "queries": [
+              {
+                "name": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d584645115f5b332ef8b9d94ce69_situacao_aluno",
+                "query": {
+                  "datasetName": "alunos",
+                  "fields": [
+                    {
+                      "name": "situacao_aluno",
+                      "expression": "`situacao_aluno`"
+                    },
+                    {
+                      "name": "situacao_aluno_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Situação do Aluno"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "situacao_aluno",
+                    "queryName": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d584645115f5b332ef8b9d94ce69_situacao_aluno"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 2,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "visao_brasil",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "alfabetizacao_brasil",
+                  "fields": [
+                    {
+                      "name": "ano",
+                      "expression": "`ano`"
+                    },
+                    {
+                      "name": "measure(pct_alfabetizados)",
+                      "expression": "MEASURE(`pct_alfabetizados`)"
+                    },
+                    {
+                      "name": "measure(meta_pct)",
+                      "expression": "MEASURE(`meta_pct`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Alfabetização Real vs Meta — Brasil"
+              },
+              "version": 3,
+              "mark": {
+                "colors": [
+                  "#15AFDD",
+                  "#C89930"
+                ],
+                "layout": "group"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "ano",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fields": [
+                    {
+                      "fieldName": "measure(pct_alfabetizados)",
+                      "displayName": "Real"
+                    },
+                    {
+                      "fieldName": "measure(meta_pct)",
+                      "displayName": "Meta"
+                    }
+                  ],
+                  "format": {
+                    "decimalPlaces": {
+                      "places": 1,
+                      "type": "exact"
+                    },
+                    "type": "number-percent"
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 6,
+            "width": 8,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "kpi_taxa",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "alunos",
+                  "fields": [
+                    {
+                      "name": "measure(taxa_alfabetizacao)",
+                      "expression": "MEASURE(`taxa_alfabetizacao`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Taxa de Alfabetização"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(taxa_alfabetizacao)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 4,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "visao_uf",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "alfabetizacao_uf",
+                  "fields": [
+                    {
+                      "name": "measure(pct_alfabetizados_ponderado)",
+                      "expression": "MEASURE(`pct_alfabetizados_ponderado`)"
+                    },
+                    {
+                      "name": "measure(meta_pct_ponderado)",
+                      "expression": "MEASURE(`meta_pct_ponderado`)"
+                    },
+                    {
+                      "name": "sigla_uf",
+                      "expression": "`sigla_uf`"
+                    }
+                  ],
+                  "disaggregated": false,
+                  "orders": [
+                    {
+                      "direction": "DESC",
+                      "expression": "MEASURE(`pct_alfabetizados_ponderado`)"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Alfabetização Real vs Meta por UF"
+              },
+              "version": 3,
+              "mark": {
+                "colors": [
+                  "#15AFDD",
+                  "#C89930"
+                ],
+                "layout": "group"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fields": [
+                    {
+                      "fieldName": "measure(pct_alfabetizados_ponderado)",
+                      "displayName": "Real"
+                    },
+                    {
+                      "fieldName": "measure(meta_pct_ponderado)",
+                      "displayName": "Meta"
+                    }
+                  ],
+                  "format": {
+                    "decimalPlaces": {
+                      "places": 1,
+                      "type": "exact"
+                    },
+                    "type": "number-percent"
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "sigla_uf",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "measure-reversed",
+                      "measure": {
+                        "fieldName": "measure(pct_alfabetizados_ponderado)"
+                      }
+                    }
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 10,
+            "width": 12,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "kpi_alunos",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "alunos",
+                  "fields": [
+                    {
+                      "name": "measure(qtd_alunos)",
+                      "expression": "MEASURE(`qtd_alunos`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Alunos Avaliados"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(qtd_alunos)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 4,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "ranking_maiores",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "alfabetizacao_municipio",
+                  "fields": [
+                    {
+                      "name": "measure(atingimento_ponderado)",
+                      "expression": "MEASURE(`atingimento_ponderado`)"
+                    },
+                    {
+                      "name": "municipio_uf",
+                      "expression": "`municipio_uf`"
+                    }
+                  ],
+                  "disaggregated": false,
+                  "orders": [
+                    {
+                      "direction": "DESC",
+                      "expression": "MEASURE(`atingimento_ponderado`)"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Municípios — Maiores Diferenças vs Meta"
+              },
+              "version": 3,
+              "mark": {
+                "colors": [
+                  "#52A870"
+                ]
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "measure(atingimento_ponderado)",
+                  "format": {
+                    "decimalPlaces": {
+                      "places": 1,
+                      "type": "exact"
+                    },
+                    "type": "number-percent"
+                  },
+                  "displayName": "Real − Meta",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "municipio_uf",
+                  "scale": {
+                    "categorySize": {
+                      "number": 10,
+                      "type": "number-of-categories"
+                    },
+                    "type": "categorical",
+                    "sort": {
+                      "by": "measure-reversed",
+                      "measure": {
+                        "fieldName": "measure(atingimento_ponderado)"
+                      }
+                    }
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 18,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "kpi_escolas",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "alunos",
+                  "fields": [
+                    {
+                      "name": "measure(escolas_avaliadas)",
+                      "expression": "MEASURE(`escolas_avaliadas`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Escolas Avaliadas"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(escolas_avaliadas)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 4,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "ranking_menores",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "alfabetizacao_municipio",
+                  "fields": [
+                    {
+                      "name": "measure(atingimento_ponderado)",
+                      "expression": "MEASURE(`atingimento_ponderado`)"
+                    },
+                    {
+                      "name": "municipio_uf",
+                      "expression": "`municipio_uf`"
+                    }
+                  ],
+                  "disaggregated": false,
+                  "orders": [
+                    {
+                      "direction": "ASC",
+                      "expression": "MEASURE(`atingimento_ponderado`)"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Municípios — Menores Diferenças vs Meta"
+              },
+              "version": 3,
+              "mark": {
+                "colors": [
+                  "#C85070"
+                ]
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "measure(atingimento_ponderado)",
+                  "format": {
+                    "decimalPlaces": {
+                      "places": 1,
+                      "type": "exact"
+                    },
+                    "type": "number-percent"
+                  },
+                  "displayName": "Real − Meta",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "municipio_uf",
+                  "scale": {
+                    "categorySize": {
+                      "number": 10,
+                      "type": "number-of-categories"
+                    },
+                    "type": "categorical",
+                    "sort": {
+                      "by": "measure",
+                      "measure": {
+                        "fieldName": "measure(atingimento_ponderado)"
+                      }
+                    }
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 18,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "kpi_municipios",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "alunos",
+                  "fields": [
+                    {
+                      "name": "measure(municipios_avaliados)",
+                      "expression": "MEASURE(`municipios_avaliados`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Municípios Avaliados"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(municipios_avaliados)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 4,
+            "width": 3,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "pie_situacao_meta",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "alfabetizacao_uf",
+                  "fields": [
+                    {
+                      "name": "measure(qtd_avaliacoes)",
+                      "expression": "MEASURE(`qtd_avaliacoes`)"
+                    },
+                    {
+                      "name": "situacao_meta",
+                      "expression": "`situacao_meta`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Situação da Meta por UF"
+              },
+              "version": 3,
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "measure(qtd_avaliacoes)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "qtd_avaliacoes"
+                },
+                "color": {
+                  "fieldName": "situacao_meta",
+                  "displayName": "situacao_meta",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 6,
+            "width": 4,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "tabela_alunos",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "alunos",
+                  "fields": [
+                    {
+                      "name": "ano",
+                      "expression": "`ano`"
+                    },
+                    {
+                      "name": "id_aluno",
+                      "expression": "`id_aluno`"
+                    },
+                    {
+                      "name": "nome_municipio",
+                      "expression": "`nome_municipio`"
+                    },
+                    {
+                      "name": "sigla_uf",
+                      "expression": "`sigla_uf`"
+                    },
+                    {
+                      "name": "rede",
+                      "expression": "`rede`"
+                    },
+                    {
+                      "name": "serie",
+                      "expression": "`serie`"
+                    },
+                    {
+                      "name": "idade",
+                      "expression": "`idade`"
+                    },
+                    {
+                      "name": "proficiencia_leitura",
+                      "expression": "`proficiencia_leitura`"
+                    },
+                    {
+                      "name": "proficiencia_escrita",
+                      "expression": "`proficiencia_escrita`"
+                    },
+                    {
+                      "name": "proficiencia_matematica",
+                      "expression": "`proficiencia_matematica`"
+                    },
+                    {
+                      "name": "nivel_escrita",
+                      "expression": "`nivel_escrita`"
+                    },
+                    {
+                      "name": "situacao_aluno",
+                      "expression": "`situacao_aluno`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Detalhes por Aluno"
+              },
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "ano"
+                  },
+                  {
+                    "fieldName": "id_aluno"
+                  },
+                  {
+                    "fieldName": "nome_municipio"
+                  },
+                  {
+                    "fieldName": "sigla_uf"
+                  },
+                  {
+                    "fieldName": "rede"
+                  },
+                  {
+                    "fieldName": "serie"
+                  },
+                  {
+                    "fieldName": "idade"
+                  },
+                  {
+                    "fieldName": "proficiencia_leitura"
+                  },
+                  {
+                    "fieldName": "proficiencia_escrita"
+                  },
+                  {
+                    "fieldName": "proficiencia_matematica"
+                  },
+                  {
+                    "fieldName": "nivel_escrita"
+                  },
+                  {
+                    "fieldName": "situacao_aluno"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 24,
+            "width": 12,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "global_filters",
+      "displayName": "Global Filters",
+      "layout": [
+        {
+          "widget": {
+            "name": "regiao",
+            "queries": [
+              {
+                "name": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d58465151ac7a47bf882a389d413_regiao",
+                "query": {
+                  "datasetName": "alfabetizacao_uf",
+                  "fields": [
+                    {
+                      "name": "regiao",
+                      "expression": "`regiao`"
+                    },
+                    {
+                      "name": "regiao_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d58464d4111dadb08aa4e88db313_regiao",
+                "query": {
+                  "datasetName": "alfabetizacao_municipio",
+                  "fields": [
+                    {
+                      "name": "regiao",
+                      "expression": "`regiao`"
+                    },
+                    {
+                      "name": "regiao_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d584645115f5b332ef8b9d94ce69_regiao",
+                "query": {
+                  "datasetName": "alunos",
+                  "fields": [
+                    {
+                      "name": "regiao",
+                      "expression": "`regiao`"
+                    },
+                    {
+                      "name": "regiao_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Região"
+              },
+              "widgetType": "filter-multi-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "regiao",
+                    "queryName": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d58465151ac7a47bf882a389d413_regiao"
+                  },
+                  {
+                    "fieldName": "regiao",
+                    "queryName": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d58464d4111dadb08aa4e88db313_regiao"
+                  },
+                  {
+                    "fieldName": "regiao",
+                    "queryName": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d584645115f5b332ef8b9d94ce69_regiao"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 0,
+            "width": 4,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "uf",
+            "queries": [
+              {
+                "name": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d58464d4111dadb08aa4e88db313_sigla_uf",
+                "query": {
+                  "datasetName": "alfabetizacao_municipio",
+                  "fields": [
+                    {
+                      "name": "sigla_uf",
+                      "expression": "`sigla_uf`"
+                    },
+                    {
+                      "name": "sigla_uf_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d584645115f5b332ef8b9d94ce69_sigla_uf",
+                "query": {
+                  "datasetName": "alunos",
+                  "fields": [
+                    {
+                      "name": "sigla_uf",
+                      "expression": "`sigla_uf`"
+                    },
+                    {
+                      "name": "sigla_uf_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "UF"
+              },
+              "widgetType": "filter-multi-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "sigla_uf",
+                    "queryName": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d58464d4111dadb08aa4e88db313_sigla_uf"
+                  },
+                  {
+                    "fieldName": "sigla_uf",
+                    "queryName": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d584645115f5b332ef8b9d94ce69_sigla_uf"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 0,
+            "width": 4,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "ano",
+            "queries": [
+              {
+                "name": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d58465151ac7a47bf882a389d413_ano",
+                "query": {
+                  "datasetName": "alfabetizacao_uf",
+                  "fields": [
+                    {
+                      "name": "ano",
+                      "expression": "`ano`"
+                    },
+                    {
+                      "name": "ano_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d58464d4111dadb08aa4e88db313_ano",
+                "query": {
+                  "datasetName": "alfabetizacao_municipio",
+                  "fields": [
+                    {
+                      "name": "ano",
+                      "expression": "`ano`"
+                    },
+                    {
+                      "name": "ano_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d584645115f5b332ef8b9d94ce69_ano",
+                "query": {
+                  "datasetName": "alunos",
+                  "fields": [
+                    {
+                      "name": "ano",
+                      "expression": "`ano`"
+                    },
+                    {
+                      "name": "ano_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "scale": {
+                "sort": {
+                  "by": "natural-order-reversed"
+                },
+                "type": "categorical"
+              },
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Ano"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "ano",
+                    "queryName": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d58465151ac7a47bf882a389d413_ano"
+                  },
+                  {
+                    "fieldName": "ano",
+                    "queryName": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d58464d4111dadb08aa4e88db313_ano"
+                  },
+                  {
+                    "fieldName": "ano",
+                    "queryName": "dashboards/01f1d583fd4211b0979fd806160b7e76/datasets/01f1d584645115f5b332ef8b9d94ce69_ano"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 4,
+            "height": 2
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_GLOBAL_FILTERS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
