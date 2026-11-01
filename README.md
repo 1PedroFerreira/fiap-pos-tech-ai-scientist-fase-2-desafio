@@ -75,3 +75,5 @@ O dashboard **“Avaliação da Alfabetização — Real vs Meta”** compara Re
 * **Detalhe por aluno** — tabela com proficiências e situação de alfabetização.
 
 Filtros: Ano, Região e UF (globais); Município, Rede, Série e Situação do Aluno (por página).
+
+> **Nota técnica:** os datasets do dashboard estão embutidos no próprio arquivo `.lvdash.json` como *local metric views* (medidas e dimensões declaradas sobre as tabelas Gold, incluindo medidas ponderadas como `SUM(x * qtd_alunos) / SUM(qtd_alunos)`), sem consultas SQL externas. Ao importar o dashboard, as tabelas Gold precisam existir no workspace de destino.
