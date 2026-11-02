@@ -1,7 +1,0 @@
-resources:
-  volumes:
-    vol_avaliacao_alfabetizacao:
-      catalog_name: ${var.catalog}
-      schema_name: ${var.schema}
-      name: vol_avaliacao_alfabetizacao
-      volume_type: MANAGED
