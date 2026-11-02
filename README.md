@@ -36,6 +36,11 @@ As duas leituras são legítimas, mas significam coisas diferentes — e não s�
 
 ```
 ├── README.md
+├── databricks.yml
+├── resources/
+│   ├── avaliacao_alfabetizacao.pipeline.yml
+│   ├── avaliacao_alfabetizacao.dashboard.yml
+│   └── vol_avaliacao_alfabetizacao.volume.yml
 ├── src/
 │   └── transformations/
 │       ├── bronze/       # ingestão batch + streaming (Auto Loader)
@@ -75,6 +80,21 @@ Os **dados não são versionados neste repositório** — eles ficam no lakehous
 1. **Carregar os CSVs** das 6 entidades no volume `workspace.default.vol_avaliacao_alfabetizacao` (pastas `batch/uf`, `batch/municipio`, `batch/meta_alfabetizacao_brasil`, `batch/meta_alfabetizacao_uf`, `batch/meta_alfabetizacao_municipio`, `batch/alunos_historico` e `streaming/alunos`);
 2. **Criar o Lakeflow Spark Declarative Pipeline** apontando para os arquivos de `src/transformations/`, com destino (catálogo) `workspace.default`, e executar um update (recomenda-se dry run antes);
 3. **Importar o dashboard** `dashboards/avaliacao_alfabetizacao_real_vs_meta.lvdash.json` (via UI do Databricks, opção *Importar do arquivo*, ou Databricks CLI) e publicar.
+
+## Implantação em outro workspace (Azure Databricks) via bundle
+
+O repo inclui um **Declarative Automation Bundle** (`databricks.yml` + `resources/`) que cria o volume, o pipeline medalhão e o dashboard em um único deploy — funciona em qualquer workspace Databricks, incluindo Azure:
+
+1. No workspace Azure, clone este repositório (Repos → Adicionar repo);
+2. Autentique o Databricks CLI: `databricks auth login --host https://<seu-workspace>.azuredatabricks.net`;
+3. No diretório do repo, valide e faça o deploy: `databricks bundle validate -t azure --var warehouse_id=<id-do-seu-warehouse>` e `databricks bundle deploy -t azure --var warehouse_id=<id-do-seu-warehouse>`;
+4. O deploy cria: o volume `vol_avaliacao_alfabetizacao` (MANAGED), o pipeline SDP serverless com os 14 scripts de `src/transformations/` e o dashboard (com as fontes dos datasets re-escritas para `${catalog}.${schema}`);
+5. Copie os CSVs das 6 entidades para `/Volumes/<catalog>/<schema>/vol_avaliacao_alfabetizacao/` (subpastas `batch/` e `streaming/`);
+6. Execute um update do pipeline (UI do pipeline ou CLI) e publique o dashboard.
+
+Variáveis do bundle: `catalog` (padrão `workspace`), `schema` (padrão `default`), `warehouse_id` (obrigatório).
+
+> **Atenção:** os scripts da camada Bronze referenciam o caminho fixo `/Volumes/workspace/default/vol_avaliacao_alfabetizacao/...`. Com os valores padrão (`catalog=workspace`, `schema=default`), basta criar o catálogo `workspace` e o schema `default` no Azure (`CREATE CATALOG workspace;` `CREATE SCHEMA workspace.default;`) e nada mais precisa mudar. Se usar outro catálogo/schema, ajuste também esses caminhos em `src/transformations/bronze/`.
 
 ## Dashboard
 

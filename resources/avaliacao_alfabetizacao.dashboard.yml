@@ -1,0 +1,10 @@
+resources:
+  dashboards:
+    avaliacao_alfabetizacao:
+      display_name: Avaliação da Alfabetização — Real vs Meta
+      file_path: ../dashboards/avaliacao_alfabetizacao_real_vs_meta.lvdash.json
+      warehouse_id: ${var.warehouse_id}
+      # Reescreve as fontes dos datasets embutidos no .lvdash.json
+      # (ex.: workspace.default.gold_alunos -> ${var.catalog}.${var.schema}.gold_alunos)
+      dataset_catalog: ${var.catalog}
+      dataset_schema: ${var.schema}
