@@ -62,6 +62,8 @@ As duas leituras são legítimas, mas significam coisas diferentes — e não s�
 │           └── gold_alfabetizacao_municipio.py
 └── dashboards/
     └── avaliacao_alfabetizacao_real_vs_meta.lvdash.json
+└── docs/
+    └── implantacao-azure.md
 ```
 
 ## Localização dos dados
@@ -84,6 +86,8 @@ Os **dados não são versionados neste repositório** — eles ficam no lakehous
 ## Implantação em outro workspace (Azure Databricks) via bundle
 
 O repo inclui um **Declarative Automation Bundle** (`databricks.yml` + `resources/`) que cria o volume, o pipeline medalhão e o dashboard em um único deploy — funciona em qualquer workspace Databricks, incluindo Azure:
+
+> **Guia completo passo a passo (com troubleshooting):** [`docs/implantacao-azure.md`](docs/implantacao-azure.md)
 
 1. No workspace Azure, clone este repositório (Repos → Adicionar repo);
 2. Autentique o Databricks CLI: `databricks auth login --host https://<seu-workspace>.azuredatabricks.net`;
