@@ -50,7 +50,7 @@ Os **dados não são versionados neste repositório** — eles ficam no lakehous
 
 ## Como Reproduzir
 
-1. **Acessar o link do dashboard no início do Readme.
+1. **Acessar** o link do dashboard no início do Readme.
 
 ## Dashboard
 
