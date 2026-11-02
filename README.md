@@ -1,10 +1,14 @@
-# Avaliação da Alfabetização — Real vs Meta (FIAP Pos Tech AI Scientist — Fase 2)
+# Avaliação da Alfabetização — Real versus Meta
 
-## Sobre o projeto
+## Sobre o Projeto
 
-Pipeline de dados medalhão (**batch + streaming**) construído no Databricks com **dados simulados** inspirados na **Avaliação da Alfabetização do INEP** (dataset disponível via Base dos Dados). O objetivo é comparar a taxa **real** de alfabetização dos alunos avaliados (2º e 3º anos do ensino fundamental) com as **metas** definidas em três níveis: **Brasil**, **UF** e **Município**.
+Projeto da fase 2 da Pós-Tech em AI Scientist da FIAP, que consiste em um pipeline de dados com arquitetura medalhão (**batch + streaming**) construído no Databricks com **dados da Avaliação da Alfabetização do INEP** (dataset disponível via Base dos Dados). O objetivo é comparar a taxa **real** de alfabetização dos alunos avaliados (2º e 3º anos do ensino fundamental) com as **metas** definidas em três níveis: **Brasil**, **UF** e **Município**.
 
-## Leitura das metas (duas leituras)
+## Links Úteis
+[Dashboard](https://dbc-6fa0cfa6-b5cf.cloud.databricks.com/dashboardsv3/01f1d583fd4211b0979fd806160b7e76/published?o=7474655927371602)
+[Vídeo Executivo](https://youtube.com)
+
+## Leitura das Metas
 
 O Compromisso Nacional tem como aspiração a **universalização da alfabetização até 2030**. As tabelas oficiais publicadas na Base dos Dados, entretanto, trazem uma **trajetória pactuada e mensurável**, com valores anuais de 2024 a 2030 — para a rede pública, a coluna `meta_alfabetizacao_2030` traz o valor **80**.
 
@@ -15,7 +19,7 @@ Neste projeto:
 
 As duas leituras são legítimas, mas significam coisas diferentes — e não são misturadas em pontos diferentes do projeto.
 
-## Entidades (6)
+## Entidades
 
 | Entidade | Conteúdo | Volume |
 | --- | --- | --- |
@@ -32,34 +36,7 @@ As duas leituras são legítimas, mas significam coisas diferentes — e não s�
 * **Silver** — deduplicação por watermark, *expectations* de qualidade (chaves, faixas de proficiência, nível de escrita) e normalização das dimensões;
 * **Gold** — agregações da taxa real de alfabetização e comparação com as metas (Brasil, UF e município), com joins entre todas as entidades.
 
-## Estrutura de pastas
-
-```
-├── README.md
-├── src/
-│   └── transformations/
-│       ├── bronze/       # ingestão batch + streaming (Auto Loader)
-│       │   ├── bronze_alunos.py
-│       │   ├── bronze_uf.py
-│       │   ├── bronze_municipio.py
-│       │   ├── bronze_meta_alfabetizacao_brasil.py
-│       │   ├── bronze_meta_alfabetizacao_uf.py
-│       │   └── bronze_meta_alfabetizacao_municipio.py
-│       ├── silver/      # deduplicação, expectations e normalização
-│       │   ├── silver_alunos.py
-│       │   ├── silver_uf.py
-│       │   ├── silver_municipio.py
-│       │   └── silver_metas.py
-│       └── gold/        # agregações real vs meta
-│           ├── gold_alunos.py
-│           ├── gold_alfabetizacao_brasil.py
-│           ├── gold_alfabetizacao_uf.py
-│           └── gold_alfabetizacao_municipio.py
-└── dashboards/
-    └── avaliacao_alfabetizacao_real_vs_meta.lvdash.json
-```
-
-## Localização dos dados
+## Localização dos Dados
 
 Os **dados não são versionados neste repositório** — eles ficam no lakehouse (Unity Catalog) do workspace Databricks:
 
@@ -70,15 +47,13 @@ Os **dados não são versionados neste repositório** — eles ficam no lakehous
   * `workspace.default.gold_alfabetizacao_uf`
   * `workspace.default.gold_alfabetizacao_municipio`
 
-## Como reproduzir
+## Como Reproduzir
 
-1. **Carregar os CSVs** das 6 entidades no volume `workspace.default.vol_avaliacao_alfabetizacao` (pastas `batch/uf`, `batch/municipio`, `batch/meta_alfabetizacao_brasil`, `batch/meta_alfabetizacao_uf`, `batch/meta_alfabetizacao_municipio`, `batch/alunos_historico` e `streaming/alunos`);
-2. **Criar o Lakeflow Spark Declarative Pipeline** apontando para os arquivos de `src/transformations/`, com destino (catálogo) `workspace.default`, e executar um update (recomenda-se dry run antes);
-3. **Importar o dashboard** `dashboards/avaliacao_alfabetizacao_real_vs_meta.lvdash.json` (via UI do Databricks, opção *Importar do arquivo*, ou Databricks CLI) e publicar.
+1. **Acessar o link do dashboard no início do Readme.
 
 ## Dashboard
 
-O dashboard **“Avaliação da Alfabetização — Real vs Meta”** compara Real vs Meta em três níveis:
+O dashboard **“Avaliação da Alfabetização — Real versus Meta”** compara Real vs Meta em três níveis:
 
 * **Brasil** — barras Real vs Meta por ano;
 * **UF** — barras horizontais Real vs Meta por UF e pizza de situação da meta (atingida / abaixo);
@@ -87,23 +62,28 @@ O dashboard **“Avaliação da Alfabetização — Real vs Meta”** compara Re
 
 Filtros: Ano, Região e UF (globais); Município, Rede, Série e Situação do Aluno (por página).
 
-> **Nota técnica:** os datasets do dashboard estão embutidos no próprio arquivo `.lvdash.json` como *local metric views* (medidas e dimensões declaradas sobre as tabelas Gold, incluindo medidas ponderadas como `SUM(x * qtd_alunos) / SUM(qtd_alunos)`), sem consultas SQL externas. Ao importar o dashboard, as tabelas Gold precisam existir no workspace de destino.
+## FinOps e Otimização de Custos
 
-## FinOps e otimização de custos
+| Operação | Consumo Estimado | Custo Estimado |
+| --- | --- | --- |
+| Update completo do pipeline (dry run + full) | ~1–3 min de compute serverless | ~US$ 0,10–0,60 |
+| Update incremental diário (Auto Loader) | < 1 min | ~US$ 0,05–0,20 |
+| Primeira carga do dashboard (16 widgets) | segundos de warehouse SQL serverless | ~US$ 0,01–0,05 |
+| Mudança de filtro (dados materializados) | quase nulo | ~US$ 0,00–0,01 |
 
-Práticas de eficiência de custo aplicadas e recomendadas neste projeto:
+Cenário mensal típico (um update por dia + uso moderado do dashboard): ordem de US$ 5–20/mês. 
 
-**Já aplicadas**
+##Tecnologias Utilizadas
 
-* **Computação serverless** — o pipeline (Lakeflow Spark Declarative Pipelines) roda em compute serverless, cobrando por DBU efetivamente consumida, sem custo de cluster ocioso;
-* **Materialização dos datasets do dashboard** — as 4 *local metric views* (`alunos`, `alfabetizacao_brasil`, `alfabetizacao_uf`, `alfabetizacao_municipio`) estão com *materialize-on-publish* habilitado: os dados são pré-computados quando o dashboard é publicado, acelerando filtros e widgets e reduzindo tempo de execução no warehouse SQL a cada visualização. Requisitos: publicação com credenciais incorporadas (*run as owner*) e pelo menos um agendamento de atualização ativo — hoje **não há nenhum agendamento**; criar um (ex.: diário) na UI de agendamentos para que a materialização seja atualizada;
-* **Deduplicação com watermark** (`silver_alunos`) — a janela de watermark de 30 dias limita o estado mantido pelo streaming, reduzindo memória e compute nos updates;
-* **Streaming incremental (Auto Loader)** — apenas os arquivos novos do volume são processados a cada update, sem reingestão completa;
-* **Consultas agregadas** — os widgets leem as tabelas Gold já agregadas por ano (Brasil/UF/município); apenas a tabela "Detalhes por Aluno" consulta registros individuais.
+| Tecnologia | Uso no projeto |
+| --- | --- |
+| Databricks | Plataforma principal de desenvolvimento e execução |
+| Unity Catalog | Governança de dados e gerenciamento das tabelas |
+| Lakeflow Declarative Pipelines | Orquestração e processamento da pipeline medalhão |
+| Auto Loader | Ingestão incremental dos dados streaming |
+| Delta Lake | Armazenamento transacional das tabelas Bronze, Silver e Gold |
+| SQL Warehouse | Consulta e visualização dos dados analíticos |
+| Databricks Dashboards | Construção do dashboard Real versus Meta |
+| Apache Spark | Processamento distribuído dos dados |
 
-**Recomendações**
-
-* **Auto-stop do warehouse SQL** — manter auto-stop curto (5–10 min) e tamanho inicial pequeno, escalando apenas se a latência do dashboard exigir;
-* **Pipeline disparado em vez de contínuo** — para dados com tolerância a latência de horas, agendar updates do pipeline (ex.: 1×/dia) em vez de processamento contínuo: o compute só existe durante o update;
-* **Atribuição de custos por tags** — aplicar tags de custo (ex.: `projeto:avaliacao_alfabetizacao`) a warehouses e pipelines e monitorar o consumo em `system.billing.usage`;
-* **Retenção de arquivos brutos** — revisar o ciclo de vida dos CSVs no volume (`batch/` e `streaming/`); após validação, arquivos históricos podem ser arquivados ou removidos para reduzir armazenamento.
+Foi adotada uma arquitetura nativa do ecossistema Databricks para reduzir complexidade operacional, simplificar governança e aproveitar funcionalidades gerenciadas de ingestão, processamento e visualização. 
