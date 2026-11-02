@@ -6,6 +6,7 @@ Projeto da fase 2 da Pós-Tech em AI Scientist da FIAP, que consiste em um pipel
 
 ## Links Úteis
 [Dashboard](https://dbc-6fa0cfa6-b5cf.cloud.databricks.com/dashboardsv3/01f1d583fd4211b0979fd806160b7e76/published?o=7474655927371602)
+<br>
 [Vídeo Executivo](https://youtube.com)
 
 ## Leitura das Metas
