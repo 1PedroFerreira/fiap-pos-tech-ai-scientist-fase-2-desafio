@@ -74,7 +74,7 @@ Filtros: Ano, Região e UF (globais); Município, Rede, Série e Situação do A
 
 Cenário mensal típico (um update por dia + uso moderado do dashboard): ordem de US$ 5–20/mês. 
 
-##Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 | Tecnologia | Uso no projeto |
 | --- | --- |
